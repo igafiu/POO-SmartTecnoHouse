@@ -8,6 +8,6 @@ public class SensorTemperatura extends Sensor {
 
     @Override
     public void actualizarValor() {
-        // todo calcular un random adecuado
+        valorActual = Math.round((15 + random.nextDouble() * 20) * 10.0) / 10.0;
     }
 }

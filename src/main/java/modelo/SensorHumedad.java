@@ -8,6 +8,6 @@ public class SensorHumedad extends Sensor {
 
     @Override
     public void actualizarValor() {
-        // todo Calcular con random
+        valorActual = Math.round((20 + random.nextDouble() * 70) * 10.0) / 10.0;
     }
 }
