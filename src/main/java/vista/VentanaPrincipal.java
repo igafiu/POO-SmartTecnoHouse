@@ -28,4 +28,12 @@ public class VentanaPrincipal extends JFrame {
 
         add(pestanas);
     }
+
+    public PanelSensores getPanelSensores() {
+        return panelSensores;
+    }
+
+    public PanelReglas getPanelReglas() {
+        return panelReglas;
+    }
 }

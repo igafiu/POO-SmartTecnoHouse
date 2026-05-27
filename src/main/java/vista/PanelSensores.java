@@ -4,13 +4,13 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class PanelSensores extends JPanel {
+public class PanelSensores extends PanelBase {
 
     public PanelSensores() {
         setLayout(new BorderLayout(5, 5));
 
         String[] columnas = {"ID", "Nombre", "Valor actual"};
-        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0) {
+        modeloTabla = new DefaultTableModel(columnas, 0) {
             @Override
             public boolean isCellEditable(int row, int col) {
                 return false;
