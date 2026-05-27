@@ -2,6 +2,7 @@ package vista;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 abstract public class PanelBase extends JPanel {
 
@@ -12,5 +13,10 @@ abstract public class PanelBase extends JPanel {
         for (String[] fila : datos) {
             modeloTabla.addRow(fila);
         }
+    }
+
+    protected void formatoLayout(){
+        setLayout(new BorderLayout(5, 5));
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 }

@@ -51,4 +51,12 @@ public class SmartTecnoHouse {
             s.actualizarValor();
         }
     }
+
+    public void evaluarReglas() {
+        for (IRegla r : reglas) {
+            if (r.isActiva()) {
+                r.aplicar(sensores, actuadores);
+            }
+        }
+    }
 }
