@@ -2,15 +2,19 @@ package modelo;
 
 import java.util.List;
 
-public interface Regla {
+public abstract class Regla implements IRegla {
 
-    String getID();
+    public Sensor buscarSensor(List<Sensor> lista, String id) {
+        for (Sensor s : lista) {
+            if (s.getID().equals(id)) return s;
+        }
+        return null;
+    }
 
-    String getDescripcion();
-
-    boolean isActiva();
-
-    void setActiva(boolean activa);
-
-    void aplicar(List<Sensor> sensores, List<Actuador> actuadores);
+    public Actuador buscarActuador(List<Actuador> lista, String id) {
+        for (Actuador a : lista) {
+            if (a.getID().equals(id)) return a;
+        }
+        return null;
+    }
 }

@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.List;
 
-public class ReglaVentilacionConfortable implements Regla {
+public class ReglaVentilacionConfortable extends Regla {
 
     private boolean activa = true;
 
@@ -28,6 +28,16 @@ public class ReglaVentilacionConfortable implements Regla {
 
     @Override
     public void aplicar(List<Sensor> sensores, List<Actuador> actuadores) {
+        Sensor temp = buscarSensor(sensores, "TMP-001");
+        Sensor pir  = buscarSensor(sensores, "PIR-001");
+        Actuador fan = buscarActuador(actuadores, "fan");
 
+        if (temp == null || pir == null || fan == null) return;
+
+        if (temp.getValor() > 28 && pir.getValor() == 1) {
+            fan.ejecutarAccion("HIGH");
+        } else {
+            fan.ejecutarAccion("OFF");
+        }
     }
 }
