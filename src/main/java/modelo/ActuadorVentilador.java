@@ -14,11 +14,16 @@ public class ActuadorVentilador extends Actuador {
     public void ejecutarAccion(String accion) {
         String a = accion.toUpperCase();
         boolean valida = false;
-
+        for (String opcion : ACCIONES) {
+            if (opcion.equals(a)) {
+                valida = true;
+                break;
+            }
+        }
         if (!valida) {
             throw new IllegalArgumentException("Acción no válida para Ventilador: " + accion);
         }
-        
+        estadoActual = a.equals("ON") ? "LOW" : a;
     }
 
     @Override
