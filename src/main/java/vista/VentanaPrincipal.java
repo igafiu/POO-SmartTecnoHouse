@@ -1,6 +1,8 @@
 package vista;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -35,5 +37,26 @@ public class VentanaPrincipal extends JFrame {
 
     public PanelReglas getPanelReglas() {
         return panelReglas;
+    }
+
+    public PanelActuadores getPanelActuadores() {
+        return panelActuadores;
+    }
+
+    public PanelLogs getPanelLogs() {
+        return panelLogs;
+    }
+
+    /**
+     * El controlador registra aquí lo que debe
+     * ocurrir al cerrar la ventana
+     */
+    public void setAccionAlCerrar(Runnable accion) {
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                accion.run();
+            }
+        });
     }
 }

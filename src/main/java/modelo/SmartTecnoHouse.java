@@ -46,16 +46,30 @@ public class SmartTecnoHouse {
         return reglas;
     }
 
+    public Sensor getSensorPorID(String id) {
+        for (Sensor sensor : sensores) {
+            if (sensor.getID().equals(id)) return sensor;
+        }
+        return null;
+    }
+
+    public Actuador getActuadorPorID(String id) {
+        for (Actuador actuador : actuadores) {
+            if (actuador.getID().equals(id)) return actuador;
+        }
+        return null;
+    }
+
     public void actualizarSensores() {
-        for (Sensor s : sensores) {
-            s.actualizarValor();
+        for (Sensor sensor : sensores) {
+            sensor.actualizarValor();
         }
     }
 
     public void evaluarReglas() {
-        for (IRegla r : reglas) {
-            if (r.isActiva()) {
-                r.aplicar(sensores, actuadores);
+        for (IRegla regla : reglas) {
+            if (regla.isActiva()) {
+                regla.aplicar(sensores, actuadores);
             }
         }
     }
