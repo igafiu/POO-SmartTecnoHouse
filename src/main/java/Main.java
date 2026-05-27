@@ -1,5 +1,5 @@
 import controlador.Controlador;
-import modelo.GestorLogs;
+import modelo.SmartTecnoHouse;
 import vista.VentanaPrincipal;
 
 import javax.swing.*;
@@ -9,7 +9,9 @@ public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             VentanaPrincipal ventana = new VentanaPrincipal();
-            new Controlador(ventana);
+            SmartTecnoHouse sistema = SmartTecnoHouse.getInstance();
+
+            new Controlador(sistema, ventana);
             ventana.setVisible(true);
         });
     }

@@ -1,10 +1,11 @@
 package controlador;
 
+import modelo.SmartTecnoHouse;
 import vista.VentanaPrincipal;
 
 public class Controlador {
 
-    public Controlador(VentanaPrincipal ventana) {
+    public Controlador(SmartTecnoHouse sistema, VentanaPrincipal ventana) {
 
     }
 }
