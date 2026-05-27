@@ -1,12 +1,15 @@
 import modelo.GestorLogs;
+import vista.VentanaPrincipal;
+
+import javax.swing.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        GestorLogs instance = GestorLogs.getInstance();
-        instance.addLog("PRUEBA", "ON", "MANUAL");
-        instance.guardarLog();
-        System.out.println("compila...");
+        SwingUtilities.invokeLater(() -> {
+            VentanaPrincipal ventana = new VentanaPrincipal();
+            ventana.setVisible(true);
+        });
     }
 
 }
