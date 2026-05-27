@@ -6,8 +6,12 @@ import java.awt.*;
 
 public class PanelSensores extends PanelBase {
 
+    protected JButton btnActualizar;
+
     public PanelSensores() {
+
         setLayout(new BorderLayout(5, 5));
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         String[] columnas = {"ID", "Nombre", "Valor actual"};
         modeloTabla = new DefaultTableModel(columnas, 0) {
@@ -23,5 +27,15 @@ public class PanelSensores extends PanelBase {
         tabla.setRowHeight(24);
 
         add(new JScrollPane(tabla), BorderLayout.CENTER);
+
+        btnActualizar = new JButton("Actualizar lecturas");
+        JPanel sur = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        sur.add(btnActualizar);
+        add(sur, BorderLayout.SOUTH);
+
+    }
+
+    public JButton getBotonActualizar() {
+        return btnActualizar;
     }
 }

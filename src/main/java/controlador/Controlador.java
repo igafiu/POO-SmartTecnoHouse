@@ -1,6 +1,5 @@
 package controlador;
 
-import modelo.Actuador;
 import modelo.IRegla;
 import modelo.Sensor;
 import modelo.SmartTecnoHouse;
@@ -20,31 +19,40 @@ public class Controlador {
     }
 
     private void inicializarPaneles(){
-        refrescarSensores();
-        refrescarReglas();
+        actualizarListaSensores();
+        actualizarListaReglas();
+        registrarListeners();
     }
 
-    private void refrescarSensores(){
+    private void actualizarListaSensores(){
         List<Sensor> sensores = sistema.getSensores();
         String[][] datos = new String[sensores.size()][3];
         for (int i = 0; i < sensores.size(); i++) {
-            Sensor s = sensores.get(i);
-            datos[i][0] = s.getID();
-            datos[i][1] = s.getNombre();
-            datos[i][2] = s.getEstadoActual();
+            Sensor sensor = sensores.get(i);
+            sensor.actualizarValor();
+            datos[i][0] = sensor.getID();
+            datos[i][1] = sensor.getNombre();
+            datos[i][2] = sensor.getEstadoActual();
         }
         ventana.getPanelSensores().refrescarTabla(datos);
     }
 
-    private void refrescarReglas(){
+    private void actualizarListaReglas(){
         List<IRegla> reglas = sistema.getReglas();
         String[][] datos = new String[reglas.size()][3];
         for (int i = 0; i < reglas.size(); i++) {
-            IRegla r = reglas.get(i);
-            datos[i][0] = r.getID();
-            datos[i][1] = r.getDescripcion();
-            datos[i][2] = r.isActiva() ? "ACTIVA" : "INACTIVA";
+            IRegla regla = reglas.get(i);
+            datos[i][0] = regla.getID();
+            datos[i][1] = regla.getDescripcion();
+            datos[i][2] = regla.isActiva() ? "ACTIVA" : "INACTIVA";
         }
         ventana.getPanelReglas().refrescarTabla(datos);
+    }
+
+    private void registrarListeners(){
+        ventana.getPanelSensores().getBotonActualizar().addActionListener(e -> {
+            sistema.actualizarSensores();
+            actualizarListaSensores();
+        });
     }
 }

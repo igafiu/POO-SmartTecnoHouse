@@ -45,4 +45,10 @@ public class SmartTecnoHouse {
     public List<IRegla> getReglas() {
         return reglas;
     }
+
+    public void actualizarSensores() {
+        for (Sensor s : sensores) {
+            s.actualizarValor();
+        }
+    }
 }
