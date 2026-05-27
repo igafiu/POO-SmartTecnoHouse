@@ -10,6 +10,17 @@ public class ActuadorPersiana extends Actuador {
 
     @Override
     public void ejecutarAccion(String accion) {
+        String a = accion.toUpperCase();
+        for (String opcion : ACCIONES) {
+            if (opcion.equals(a)) {
+                switch (a) {
+                    case "ABRIR"  -> estadoActual = "ABIERTA";
+                    case "CERRAR" -> estadoActual = "CERRADA";
+                    default       -> estadoActual = "MEDIO";
+                }
+                return;
+            }
+        }
         throw new IllegalArgumentException("Acción no válida para Persiana: " + accion);
     }
 
