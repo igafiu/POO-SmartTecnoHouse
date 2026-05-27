@@ -1,3 +1,4 @@
+import controlador.Controlador;
 import modelo.GestorLogs;
 import vista.VentanaPrincipal;
 
@@ -8,6 +9,7 @@ public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             VentanaPrincipal ventana = new VentanaPrincipal();
+            new Controlador(ventana);
             ventana.setVisible(true);
         });
     }
