@@ -9,7 +9,7 @@ public class ActuadorPersiana extends Actuador {
     }
 
     @Override
-    public void ejecutarAccion(String accion) {
+    protected void procesarAccion(String accion) {
         String a = accion.toUpperCase();
         for (String opcion : ACCIONES) {
             if (opcion.equals(a)) {

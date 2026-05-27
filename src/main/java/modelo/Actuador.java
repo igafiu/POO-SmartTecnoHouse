@@ -12,9 +12,26 @@ public abstract class Actuador implements IDispositivo {
         this.estadoActual = estadoInicial;
     }
 
-    public abstract void ejecutarAccion(String accion);
+    protected abstract void procesarAccion(String accion);
 
     public abstract String[] getAccionesPosibles();
+
+    // Llamado por las reglas automaticas
+    public void ejecutarAccion(String accion) {
+        procesarAccion(accion);
+        GestorLogs.getInstance().addLog(id, estadoActual, "REGLA");
+    }
+
+    // Llamado por el controlador cuando la accion es manual
+    public void ejecutarAccion(String accion, String fuente) {
+        procesarAccion(accion);
+        GestorLogs.getInstance().addLog(id, estadoActual, fuente);
+    }
+
+    // Solo para restaurar estado desde persistencia, sin generar log
+    public void setEstado(String estado) {
+        this.estadoActual = estado;
+    }
 
     @Override
     public String getID() {

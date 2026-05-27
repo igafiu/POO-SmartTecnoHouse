@@ -11,7 +11,7 @@ public class ActuadorVentilador extends Actuador {
     }
 
     @Override
-    public void ejecutarAccion(String accion) {
+    protected void procesarAccion(String accion) {
         String a = accion.toUpperCase();
         boolean valida = false;
         for (String opcion : ACCIONES) {
