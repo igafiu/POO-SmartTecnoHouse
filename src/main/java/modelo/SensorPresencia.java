@@ -8,7 +8,7 @@ public class SensorPresencia extends Sensor {
 
     @Override
     public void actualizarValor() {
-        valorActual = random.nextInt(1);
+        valorActual = random.nextInt(2);
     }
 
     @Override
