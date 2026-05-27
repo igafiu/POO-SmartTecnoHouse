@@ -12,6 +12,13 @@ public class ActuadorVentilador extends Actuador {
 
     @Override
     public void ejecutarAccion(String accion) {
+        String a = accion.toUpperCase();
+        boolean valida = false;
+
+        if (!valida) {
+            throw new IllegalArgumentException("Acción no válida para Ventilador: " + accion);
+        }
+        
     }
 
     @Override
