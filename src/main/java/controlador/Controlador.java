@@ -5,7 +5,16 @@ import vista.VentanaPrincipal;
 
 public class Controlador {
 
-    public Controlador(SmartTecnoHouse sistema, VentanaPrincipal ventana) {
+    SmartTecnoHouse sistema;
+    VentanaPrincipal ventana;
 
+    public Controlador(SmartTecnoHouse sistema, VentanaPrincipal ventana) {
+        this.sistema = sistema;
+        this.ventana = ventana;
+        inicializarPaneles();
+    }
+
+    private void inicializarPaneles(){
+        System.out.println(sistema.getActuadores().toString());
     }
 }
