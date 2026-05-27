@@ -10,6 +10,13 @@ public class ActuadorBombilla extends Actuador {
 
     @Override
     public void ejecutarAccion(String accion) {
+        String a = accion.toUpperCase();
+        for (String opcion : ACCIONES) {
+            if (opcion.equals(a)) {
+                estadoActual = a;
+                return;
+            }
+        }
         throw new IllegalArgumentException("Acción no válida para Bombilla: " + accion);
     }
 
