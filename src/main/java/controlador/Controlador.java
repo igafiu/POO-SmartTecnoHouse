@@ -6,11 +6,32 @@ import vista.VentanaPrincipal;
 import javax.swing.*;
 import java.util.List;
 
+/**
+ * Controlador principal de la aplicación SmartTecnoHouse.
+ * Actúa como intermediario entre el modelo SmartTecnoHouse y la vista
+ * VentanaPrincipal.
+ * <p>
+ * Registra los listeners de todos los botones y
+ * listas de la interfaz, procesa las acciones del usuario y actualiza la vista
+ * con los datos más recientes del modelo.
+ * </p>
+ * <p>
+ * Al iniciarse, carga el estado persistido desde estado.json y rellena
+ * todos los paneles con los valores actuales del sistema.
+ * </p>
+ */
 public class Controlador {
 
     SmartTecnoHouse sistema;
     VentanaPrincipal ventana;
 
+    /**
+     * Crea el controlador, carga el estado persistido y registra todos los
+     * listeners de la interfaz gráfica.
+     *
+     * @param sistema instancia única de SmartTecnoHouse (modelo)
+     * @param ventana ventana principal de la aplicación (vista)
+     */
     public Controlador(SmartTecnoHouse sistema, VentanaPrincipal ventana) {
         this.sistema = sistema;
         this.ventana = ventana;
@@ -20,27 +41,28 @@ public class Controlador {
         inicializarPaneles();
     }
 
-    private void inicializarPaneles(){
+    /**
+     * Genera una lectura inicial de todos los sensores y rellena los tres
+     * paneles (sensores, reglas y actuadores) con los datos del modelo.
+     * Además, selecciona el primer actuador de la lista para que el combo
+     * de acciones no quede vacío al arrancar.
+     */
+    private void inicializarPaneles() {
         sistema.actualizarSensores();
         actualizarListaSensores();
         actualizarListaReglas();
         actualizarListaActuadores();
 
-        /**
-         * Si el actuador no está seleccionado,
-         * el desplegable se queda vacío.
-         * Tareas para mañana:
-         * - Mejorar aspectos SOLID y DRY
-         * - Hacer Testing end to end
-         * - Documentar
-         *
-         */
         if (!sistema.getActuadores().isEmpty()) {
             ventana.getPanelActuadores().getListaActuadores().setSelectedIndex(0);
         }
     }
 
-    private void actualizarListaSensores(){
+    /**
+     * Lee los valores actuales de todos los sensores del modelo y actualiza
+     * la tabla del PanelSensores con ID, nombre y valor actual.
+     */
+    private void actualizarListaSensores() {
         List<Sensor> sensores = sistema.getSensores();
         String[][] datos = new String[sensores.size()][3];
         for (int i = 0; i < sensores.size(); i++) {
@@ -52,7 +74,11 @@ public class Controlador {
         ventana.getPanelSensores().refrescarTabla(datos);
     }
 
-    private void actualizarListaReglas(){
+    /**
+     * Lee la lista de reglas del modelo y actualiza la tabla del
+     * PanelReglas con ID, descripción y estado (ACTIVA / INACTIVA).
+     */
+    private void actualizarListaReglas() {
         List<IRegla> reglas = sistema.getReglas();
         String[][] datos = new String[reglas.size()][3];
         for (int i = 0; i < reglas.size(); i++) {
@@ -64,7 +90,10 @@ public class Controlador {
         ventana.getPanelReglas().refrescarTabla(datos);
     }
 
-
+    /**
+     * Lee la lista de actuadores del modelo y actualiza el JList del
+     * PanelActuadores mostrando el nombre y el estado actual de cada uno.
+     */
     private void actualizarListaActuadores() {
         List<Actuador> actuadores = sistema.getActuadores();
         String[] etiquetas = new String[actuadores.size()];
@@ -75,14 +104,26 @@ public class Controlador {
         ventana.getPanelActuadores().refrescarActuadores(etiquetas);
     }
 
-    private void registrarListeners(){
+    /**
+     * Registra todos los ActionListener y ListSelectionListener
+     * de la interfaz gráfica.
+     * <ul>
+     *   <li>Botón «Actualizar lecturas»: genera nuevos valores aleatorios en los sensores.</li>
+     *   <li>Botón «Activar / Desactivar»: invierte el estado de la regla seleccionada.</li>
+     *   <li>Botón «Evaluar reglas»: ejecuta todas las reglas activas sobre el estado actual.</li>
+     *   <li>Selección en la lista de actuadores: actualiza el combo de acciones disponibles.</li>
+     *   <li>Botón «Ejecutar»: dispara la acción seleccionada con fuente MANUAL.</li>
+     *   <li>Botón «Guardar log»: escribe el log en disco.</li>
+     *   <li>Cierre de ventana: persiste el estado en estado.json y genera el log.</li>
+     * </ul>
+     */
+    private void registrarListeners() {
 
         // Refrescar los valores en el panel de sensores
         ventana.getPanelSensores().getBotonActualizar().addActionListener(e -> {
             sistema.actualizarSensores();
             actualizarListaSensores();
         });
-
 
         // Activa o desactiva las reglas
         ventana.getPanelReglas().getBotonToggle().addActionListener(e -> {
@@ -99,8 +140,6 @@ public class Controlador {
             }
             actualizarListaReglas();
         });
-
-
 
         // Evalua todas las reglas activas
         ventana.getPanelReglas().getBotonEvaluar().addActionListener(e -> {
@@ -139,7 +178,6 @@ public class Controlador {
             sincronizarEntradasNuevas(antes);
         });
 
-
         // Logs: guardar fichero
         ventana.getPanelLogs().getBotonGuardar().addActionListener(e -> {
             GestorLogs.getInstance().guardarLog();
@@ -153,9 +191,15 @@ public class Controlador {
             ventana.dispose();
             System.exit(0);
         });
-
     }
 
+    /**
+     * Añade al panel de logs las entradas del GestorLogs generadas a
+     * partir de la posición desde, que corresponde al número de entradas
+     * existentes antes de la última operación sobre el modelo.
+     *
+     * @param desde índice desde el que empezar a leer las entradas nuevas
+     */
     private void sincronizarEntradasNuevas(int desde) {
         List<String[]> entradas = GestorLogs.getInstance().getEntradas();
         for (int i = desde; i < entradas.size(); i++) {

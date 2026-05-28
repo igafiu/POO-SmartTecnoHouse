@@ -1,22 +1,21 @@
 package modelo;
 
+import java.io.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.lang.reflect.Type;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
-import java.io.*;
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GestorPersistencia {
 
     private static final String FICHERO = "estado.json";
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    private GestorPersistencia() {
+    private GestorPersistencia() {}
 
-    }
 
     public static void guardar(SmartTecnoHouse sistema) {
         Map<String, Object> estado = new HashMap<>();
@@ -52,7 +51,7 @@ public class GestorPersistencia {
 
             Object registro = estado.get("actuadores");
             if (registro instanceof Map<?, ?> mapa) {
-                for (Map.Entry<?, ?> e : mapa.entrySet()) { // todo: Volver a intentar asignar los genéricos que corresponden
+                for (Map.Entry<?, ?> e : mapa.entrySet()) {
                     Actuador a = sistema.getActuadorPorID((String) e.getKey());
                     if (a != null) a.setEstado((String) e.getValue());
                 }
@@ -60,7 +59,7 @@ public class GestorPersistencia {
 
             registro = estado.get("reglas");
             if (registro instanceof Map<?, ?> mapa) {
-                for (Map.Entry<?, ?> e : mapa.entrySet()) { // todo: Volver a intentar asignar los genéricos que corresponden
+                for (Map.Entry<?, ?> e : mapa.entrySet()) {
                     for (IRegla reg : sistema.getReglas()) {
                         if (reg.getID().equals(e.getKey())) {
                             reg.setActiva((Boolean) e.getValue());
