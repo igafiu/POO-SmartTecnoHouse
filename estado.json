@@ -1,0 +1,12 @@
+{
+  "actuadores": {
+    "blind": "ABIERTA",
+    "fan": "OFF",
+    "bulb": "OFF"
+  },
+  "reglas": {
+    "R2": true,
+    "R3": true,
+    "R1": true
+  }
+}
